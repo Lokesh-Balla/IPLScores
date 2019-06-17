@@ -56,6 +56,11 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
+        {% if user.is_authenticated %}
+        <a class="button is-small is-light" style="position:absolute;right:0%;margin:1%;" href="{% url 'logout' %}">logout<i class="fa-fw fas fa-sign-out-alt"></i></a>
+        {% else %}
+        <a class="button is-small is-light" style="position:absolute;right:0%;margin:1%;" href="{% url 'login' %}"><i class="fa-fw fas fa-user"></i>login</a>
+        {% endif %}
     </div>
 </nav>
 {% block content %}

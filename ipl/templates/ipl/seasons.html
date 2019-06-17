@@ -1,7 +1,7 @@
 {% extends "ipl/stemp.html" %}
 
 {% block table %}
-<table class="table is-striped is-hoverable" style="margin-left:10%;width:80%">
+<table class="table is-striped is-hoverable" id="table_items" style="margin-left:10%;width:80%">
     <tr>
         <th>Team 1</th>
         <th>Team 2</th>
@@ -13,7 +13,7 @@
         <th></th>
     </tr>
     {% for lst in tables %}
-    <tr>
+    <tr style="display:none">
         <td>{{ lst.0 }}</td>
         <td>{{ lst.1 }}</td>
         <td>{{ lst.2 }}</td>
@@ -25,5 +25,65 @@
     </tr>
     {% endfor %}
 </table>
+<nav class="pagination is-centered" role="navigation" aria-label="pagination" style="width:80%;margin-left:10%;">
+    <ul class="pagination-list" id="pglist">
+    </ul>
+</nav>
+<script>
+    function changePage(start){
+        var i=0;
+        for(let row of table_items.rows){
+            if(i==0){
+                row.style.display="inherit";
+                i+=1;
+                continue;
+            }
+            if(i>=start && i<8+start){
+                row.style.display="inherit";
+            }else{
+                row.style.display="none";
+            }
+            i+=1;
+        }
+        i=0;
+        while(document.getElementById("cp"+i)){
+            document.getElementById("cp"+i).classList.remove("is-current");
+            i+=8;
+        }
 
+        document.getElementById("cp"+start).classList.add("is-current");
+    }
+
+    function displayPagination(){
+        var count = 0;
+        for(let row of table_items.rows){
+            count+=1;
+        }
+        if(count%8==0){
+            count=count/8;
+        }else{
+            count=(count/8)+1;
+        }
+        var page_link='';
+        for(let i=1;i<=count;i++){
+            page_link+=`
+                <li>
+                    <button class="pagination-link" id="cp`+8*(i-1)+`" onclick="changePage(`+8*(i-1)+`);" >`+i+`</button>
+                </li>
+            `;
+        }
+        document.getElementById("pglist").innerHTML=page_link;
+
+    }
+
+    function start(){
+        displayPagination();
+        changePage(0);
+    }
+
+    window.onload=start();
+
+
+
+</script>
 {% endblock table %}
