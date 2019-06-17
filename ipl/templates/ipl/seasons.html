@@ -1,0 +1,29 @@
+{% extends "ipl/stemp.html" %}
+
+{% block table %}
+<table class="table is-striped is-hoverable" style="margin-left:10%;width:80%">
+    <tr>
+        <th>Team 1</th>
+        <th>Team 2</th>
+        <th>City</th>
+        <th>Toss Winner</th>
+        <th>Toss Decision</th>
+        <th>Winner</th>
+        <th>Player of the Match</th>
+        <th></th>
+    </tr>
+    {% for lst in tables %}
+    <tr>
+        <td>{{ lst.0 }}</td>
+        <td>{{ lst.1 }}</td>
+        <td>{{ lst.2 }}</td>
+        <td>{{ lst.3 }}</td>
+        <td>{{ lst.4 }}</td>
+        <td>{{ lst.5 }}</td>
+        <td>{{ lst.6 }}</td>
+        <td><a href="{% url 'matchview' year lst.7 %}" class="button is-dark">Match Details</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock table %}
