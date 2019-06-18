@@ -12,11 +12,20 @@
         </div>
         <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
+                {% if "/seasons" in request.get_full_path %}
                 {% for lst in seasons %}
                 <a href="{% url 'seasonsview' lst.year %}" class="dropdown-item">
                     {{ lst.year }}
                 </a>
                 {% endfor %}
+                {% else %}
+                {% for lst in seasons %}
+                <a href="{% url 'pointsview' lst.year %}" class="dropdown-item">
+                    {{ lst.year }}
+                </a>
+                {% endfor %}
+                {% endif %}
+
             </div>
         </div>
 </div>

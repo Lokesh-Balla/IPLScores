@@ -42,24 +42,29 @@
   overflow: hidden;
   transition: max-height 0.3s ease-out;
 }
-</style>
+
+
+    </style>
 </head>
 <body>
 <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <a class="navbar-item" href="#">
-            <i class="fas fa-laugh-squint"></i>
+        <a class="navbar-item" href="{% url 'seasonsview' 2019%}">
+            <img src="{% static 'ipl/logo.png' %}" alt="Ipl Logo">
         </a>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+        <a href="{% url 'pointsview' 2019 %}" class="navbar-item">
+            Points
+        </a>
+        <a href="{% url 'seasonsview' 2019 %}" class="navbar-item">
+            Seasons
         </a>
         {% if user.is_authenticated %}
-        <a class="button is-small is-light" style="position:absolute;right:0%;margin:1%;" href="{% url 'logout' %}">logout<i class="fa-fw fas fa-sign-out-alt"></i></a>
+        <a class="button is-small is-light" style="position:absolute;right:0%;margin:1%;" href="{% url 'logout' %}">logout<i
+                class="fa-fw fas fa-sign-out-alt"></i></a>
         {% else %}
-        <a class="button is-small is-light" style="position:absolute;right:0%;margin:1%;" href="{% url 'login' %}"><i class="fa-fw fas fa-user"></i>login</a>
+        <a class="button is-small is-light" style="position:absolute;right:0%;margin:1%;"
+           href="{% url 'login' %}"><i class="fa-fw fas fa-user"></i>login</a>
         {% endif %}
     </div>
 </nav>
