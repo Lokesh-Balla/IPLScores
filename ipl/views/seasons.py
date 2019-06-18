@@ -3,6 +3,8 @@ from ipl import models
 from django.shortcuts import render, redirect
 from django.urls import resolve
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Sum
+from functools import reduce
 
 
 class SesonsView(View):
@@ -47,6 +49,22 @@ class MatchView(LoginRequiredMixin, View):
                 in3.append(x)
             elif x['inning'] == 4:
                 in4.append(x)
+
+        # stats
+        teams = list(models.Deliveries.objects.values_list('battingTeam').filter(matchId=match_id).distinct())
+        teams = reduce(lambda x, y: x + y, teams)
+        topScorersTeam1 = models.Deliveries.objects.values('batsman').order_by('-count').filter(
+            matchId=match_id).filter(battingTeam=teams[0]).annotate(count=Sum('totalRuns'))[:3]
+        topScorersTeam2 = models.Deliveries.objects.values('batsman').order_by('-count').filter(
+            matchId=match_id).filter(battingTeam=teams[1]).annotate(count=Sum('totalRuns'))[:3]
+        topWicketTakersTeam1 = models.Deliveries.objects.values('bowler').order_by('-count').filter(
+            battingTeam=teams[0]).filter(matchId=match_id).exclude(playerDismissed='').annotate(
+            count=Count('playerDismissed'))[:3]
+        topWicketTakersTeam2 = models.Deliveries.objects.values('bowler').order_by('-count').filter(
+            battingTeam=teams[1]).filter(matchId=match_id).exclude(playerDismissed='').annotate(
+            count=Count('playerDismissed'))[:3]
+        score = models.Deliveries.objects.values('battingTeam').filter(matchId=match_id).annotate(
+            count=Count('totalRuns'), extra=Sum('extraRuns'))
         return render(
             request,
             template_name='ipl/matchs.html',
@@ -58,5 +76,10 @@ class MatchView(LoginRequiredMixin, View):
                 'in3': in3,
                 'in4': in4,
                 'superover': superover,
+                'topScorersTeam1': topScorersTeam1,
+                'topScorersTeam2': topScorersTeam2,
+                'topWicketTakersTeam1': topWicketTakersTeam1,
+                'topWicketTakersTeam2': topWicketTakersTeam2,
+                'score': score,
             },
         )

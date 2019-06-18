@@ -23,8 +23,50 @@
     </a>
     <table class="table is-narrow" style="margin-left:10%">
         <tr>
-            <th>Team 1 :</th><td>{{ in1.0.battingTeam }}</td>
-            <th>Team 2 :</th><td>{{ in1.0.bowlingTeam }}</td>
+            <th>Team 1 :</th>
+            <td>{{ in1.0.battingTeam }}</td>
+            <th>Total Score :</th>
+            <td>{{ score.0.count}}</td>
+            <th>Runs Conceded :</th>
+            <td>{{ score.1.extra }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Top Scorer :</th>
+            {% for lst in topScorersTeam1 %}
+                <td>{{ lst.batsman }}</td>
+                <td>{{ lst.count }}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>Top Wicket Taker</th>
+            {% for lst in topWicketTakersTeam1 %}
+                <td>{{ lst.bowler }}</td>
+                <td>{{ lst.count }}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>Team 2 :</th>
+            <td>{{ in1.0.bowlingTeam }}</td>
+            <th>Total Score :</th>
+            <td>{{ score.1.count}}</td>
+            <th>Runs Conceded :</th>
+            <td>{{ score.0.extra }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Top Scorer :</th>
+            {% for lst in topScorersTeam2 %}
+                <td>{{ lst.batsman }}</td>
+                <td>{{ lst.count }}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>Top Wicket Taker</th>
+            {% for lst in topWicketTakersTeam2 %}
+                <td>{{ lst.bowler }}</td>
+                <td>{{ lst.count }}</td>
+            {% endfor %}
         </tr>
     </table>
 </div>
