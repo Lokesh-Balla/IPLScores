@@ -53,3 +53,10 @@ class Deliveries(models.Model):
     playerDismissed = models.CharField(max_length=120)
     DismissalKind = models.CharField(max_length=120)
     fielder = models.CharField(max_length=120)
+
+
+class Teams(models.Model):
+    name = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name

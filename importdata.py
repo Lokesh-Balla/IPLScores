@@ -5,6 +5,7 @@ import iplpage
 import csv
 import os
 import django
+from functools import reduce
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'iplpage.settings')
 django.setup()
@@ -95,6 +96,17 @@ def importballs():
         score.save()
         print(i)
 
+
+@main.command()
+def insertTeams():
+    teams = ipl.models.Matches.objects.values_list('team1', 'team2')
+    teams = reduce(lambda x, y: x + y, teams)
+    teams = list(set(teams))
+    #print(teams)
+    for x in teams:
+        team = ipl.models.Teams()
+        team.name = x
+        team.save()
 
 if __name__ == '__main__':
     main()
