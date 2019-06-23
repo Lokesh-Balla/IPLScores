@@ -66,15 +66,13 @@
         }
 
         document.getElementById("cp" + start).classList.add("is-current");
-        if(current_page == 1){
+        if (current_page == 1) {
             document.getElementById("pagination-pre").disabled = true;
             document.getElementById("pagination-nxt").disabled = false;
-        }
-        else if(current_page == Math.floor(max_pages)){
+        } else if (current_page == Math.floor(max_pages)) {
             document.getElementById("pagination-nxt").disabled = true;
             document.getElementById("pagination-pre").disabled = false;
-        }
-        else{
+        } else {
             document.getElementById("pagination-pre").disabled = false;
             document.getElementById("pagination-nxt").disabled = false;
         }
